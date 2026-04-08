@@ -8,28 +8,26 @@ import productRouter from './routes/productRoutes.js'
 import cartRouter from './routes/cartRoutes.js'
 import orderRouter from './routes/orderRoutes.js'
 
-
-//APp config
-
 const app = express()
-const port = process.env.PORT || 4000
+
+// connect DB & cloudinary
 connectDB()
 connectCloudinary()
 
-//middleware
+// middleware
 app.use(express.json())
 app.use(cors())
 
-//api endpoints
+// routes
 app.use('/api/user', userRouter)
-app.use('/api/product', productRouter);
+app.use('/api/product', productRouter)
 app.use('/api/cart', cartRouter)
 app.use('/api/order', orderRouter)
 
+// test route
+app.get('/', (req, res) => {
+  res.send("API Working ✅")
+})
 
-//API
-export default function handler(req, res) {
-  res.status(200).json({ message: "API working" });
-}
-
-app.listen(port, () => console.log(`Server started at PORT ${port}`) )
+// ✅ IMPORTANT: export app (NO app.listen)
+export default app
