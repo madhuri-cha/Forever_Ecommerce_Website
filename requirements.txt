@@ -1,0 +1,52 @@
+#for frontend - mern stack
+nodejs
+
+#for backend - mern
+express
+mongoose
+cors    
+dotenv
+jsonwebtoken
+bcryptjs
+nodemon
+cloudinary #for image upload
+multer
+validator
+razorpay
+stripe
+
+#commands
+#to install all dependencies  
+
+#npm install express mongoose cors dotenv 
+#jsonwebtoken bcryptjs cloudinary nodemon multer validator razorpay stripe 
+
+npm uninstall @tailwindcss/vite
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p
+
+npm uninstall tailwindcss
+npm install -D tailwindcss@3 postcss autoprefixer
+npx tailwindcss init -p
+
+npm i react-router-dom  react-toastify  
+npm install --save react-toastify
+
+node --env-file=.env seed.js  
+
+
+npm create vite@latest 
+npm install axios react-router-dom react-toastify
+#for frontend running command
+npm run dev  
+
+npm install
+npm init -y
+#bakend running command
+npm run server   
+
+
+#For Hasing password we use salt and hash method of bcryptjs
+
+#for stripe - tomj
+#for db - chavanmadhuri258
