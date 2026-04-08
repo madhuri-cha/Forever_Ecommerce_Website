@@ -28,8 +28,8 @@ app.use('/api/order', orderRouter)
 
 
 //API
-app.get('/', (req, res) => {
-    res.send("API WORKING");
-})
+export default function handler(req, res) {
+  res.status(200).json({ message: "API working" });
+}
 
 app.listen(port, () => console.log(`Server started at PORT ${port}`) )
