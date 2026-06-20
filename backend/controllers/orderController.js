@@ -8,10 +8,10 @@ import Razorpay from 'razorpay'
 const currency = 'inr'
 const deliverCharge=10
 
-//gateway initialized
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+//gateway initialized lazily to avoid crash on missing env vars at startup
+const getStripe = () => new Stripe(process.env.STRIPE_SECRET_KEY);
 
-const razorpayInstance = new Razorpay({
+const getRazorpay = () => new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID,
   key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
@@ -94,7 +94,7 @@ const placeOrderStripe = async (req, res) => {
             quantity: 1
     })
 
-    const session = await stripe.checkout.sessions.create({
+    const session = await getStripe().checkout.sessions.create({
         success_url: `${origin}/verify?success=true&orderId=${newOrder._id}`,
         cancel_url: `${origin}/verify?success=true&orderId=${newOrder._id}`,
         line_items,
@@ -161,7 +161,7 @@ const placeOrderRazorpay = async (req, res) => {
   
   
 
-        const order = await razorpayInstance.orders.create(options);
+        const order = await getRazorpay().orders.create(options);
 
     // ✅ SEND order to frontend
     res.json({
@@ -179,7 +179,7 @@ const verifyRazorpay = async (req, res) => {
 
         const { userId, razorpay_order_id } = req.body
 
-        const orderInfo = await razorpayInstance.orders.fetch(razorpay_order_id)
+        const orderInfo = await getRazorpay().orders.fetch(razorpay_order_id)
         
         if (orderInfo.status === 'paid') {
             await orderModel.findByIdAndUpdate(orderInfo.receipt, {payment:true});
